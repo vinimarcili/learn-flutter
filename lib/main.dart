@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(
-  Column(
-    children: <Widget>[
-      Text(
-        'Oie',
-        textDirection: TextDirection.ltr,
+  MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Transferências'),
       ),
-      Text(
-        'Doido',
-        textDirection: TextDirection.ltr,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: null,
       ),
-      Expanded(
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: const FlutterLogo(),
-        ),
-      ),
-    ],
+    ),
+    debugShowCheckedModeBanner: false,
   )
 );
