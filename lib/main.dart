@@ -9,7 +9,7 @@ class BytebankApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: FormTransfer(),
+        body: TransferList(),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -17,37 +17,32 @@ class BytebankApp extends StatelessWidget {
 }
 
 class TransferList extends StatelessWidget {
+
+  final List<Transfer> _transfers = List();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Item(
-            Transfer(
-              100.00,
-              '12344-2'
-            )
-          ),
-          Item(
-            Transfer(
-              200.00,
-              '32543-3'
-            )
-          ),
-          Item(
-            Transfer(
-              50.00,
-              '145644-X'
-            )
-          ),
-        ]
+      body: ListView.builder(
+        itemCount: _transfers.length,
+        itemBuilder: (context, index) {
+          final item = _transfers[index];
+          return Item(item);
+        },
       ),
       appBar: AppBar(
         title: const Text('Transferências'),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: null,
+        onPressed: () {
+          final Future<Transfer> future = Navigator.push(context, MaterialPageRoute(
+            builder: (context) => FormTransfer() 
+          ));
+          future.then((transfer) {
+            _transfers.add(transfer);
+          });
+        },
       ),
     );
   }
@@ -95,54 +90,66 @@ class FormTransfer extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerAccount,
-              style: TextStyle(
-                fontSize: 24.0
-              ),
-              decoration: InputDecoration(
-                labelText: 'Número da Conta',
-                hintText: '12345-7'
-              ),
-              keyboardType: TextInputType.number,
-            ),
+          TextInput(
+            controller: _controllerAccount,
+            label: 'Número da conta',
+            placeholder: '123123-X'
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controllerValue,
-              style: TextStyle(
-                fontSize: 24.0
-              ),
-              decoration: InputDecoration(
-                labelText: 'Valor',
-                hintText: '50.00',
-                icon: Icon(Icons.monetization_on)
-              ),
-              keyboardType: TextInputType.number,
-            ),
+          TextInput(
+            controller: _controllerValue,
+            label: 'Valor',
+            placeholder: '50.00',
+            icon: Icons.monetization_on
           ),
           RaisedButton(
             child: Text('Confirmar'),
-            onPressed: () {
-              final String account = _controllerAccount.text;
-              final double value = double.tryParse(_controllerValue.text);
-              if(account != null && value != null){
-                final newTransfer = Transfer(value, account);
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('$newTransfer'),
-                  ),
-                );
-              }
-            },
+            onPressed: () => _buildTransfer(context),
           )
         ]
       ),
       appBar: AppBar(
         title: const Text('Criando transferência'),
+      ),
+    );
+  }
+
+  void _buildTransfer(context) {
+    final String account = _controllerAccount.text;
+    final double value = double.tryParse(_controllerValue.text);
+    if(account != null && value != null){
+      final newTransfer = Transfer(value, account);
+      Navigator.pop(context, newTransfer);
+    }
+  }
+}
+
+
+class TextInput extends StatelessWidget {
+
+  final TextEditingController controller;
+  final String label;
+  final String placeholder;
+  final IconData icon;
+
+  TextInput({
+    this.controller, this.label, this.placeholder, this.icon
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: TextField(
+        controller: controller,
+        style: TextStyle(
+          fontSize: 24.0
+        ),
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: placeholder,
+          icon: (icon != null) ? Icon(icon) : null,
+        ),
+        keyboardType: TextInputType.number,
       ),
     );
   }
