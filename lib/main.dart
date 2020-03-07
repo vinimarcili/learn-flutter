@@ -16,17 +16,14 @@ class BytebankApp extends StatelessWidget {
   }
 }
 
-class TransferList extends StatelessWidget {
-
-  final List<Transfer> _transfers = List();
-
-  @override
+class TransferListState extends State<TransferList> {
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: _transfers.length,
+        itemCount: widget._transfers.length,
         itemBuilder: (context, index) {
-          final item = _transfers[index];
+          final item = widget._transfers[index];
           return Item(item);
         },
       ),
@@ -40,12 +37,28 @@ class TransferList extends StatelessWidget {
             builder: (context) => FormTransfer() 
           ));
           future.then((transfer) {
-            _transfers.add(transfer);
+            Future.delayed(Duration(seconds: 1), () {
+              if (transfer != null) {
+                setState(() {
+                  widget._transfers.add(transfer);
+                }); 
+              }
+            });
           });
         },
       ),
     );
   }
+}
+
+class TransferList extends StatefulWidget {
+
+  final List<Transfer> _transfers = List();
+
+  @override
+  State<StatefulWidget> createState() {
+    return TransferListState();
+  } 
 }
 
 class Item extends StatelessWidget {
@@ -78,34 +91,33 @@ class Transfer {
   }
 }
 
-class FormTransfer extends StatelessWidget {
-
+class FormTransferState extends State<FormTransfer> {
   final TextEditingController _controllerAccount = TextEditingController();
   final TextEditingController _controllerValue = TextEditingController();
-
-  FormTransfer();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          TextInput(
-            controller: _controllerAccount,
-            label: 'Número da conta',
-            placeholder: '123123-X'
-          ),
-          TextInput(
-            controller: _controllerValue,
-            label: 'Valor',
-            placeholder: '50.00',
-            icon: Icons.monetization_on
-          ),
-          RaisedButton(
-            child: Text('Confirmar'),
-            onPressed: () => _buildTransfer(context),
-          )
-        ]
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            TextInput(
+              controller: _controllerAccount,
+              label: 'Número da conta',
+              placeholder: '123123-X'
+            ),
+            TextInput(
+              controller: _controllerValue,
+              label: 'Valor',
+              placeholder: '50.00',
+              icon: Icons.monetization_on
+            ),
+            RaisedButton(
+              child: Text('Confirmar'),
+              onPressed: () => _buildTransfer(context),
+            )
+          ]
+        ),
       ),
       appBar: AppBar(
         title: const Text('Criando transferência'),
@@ -120,6 +132,13 @@ class FormTransfer extends StatelessWidget {
       final newTransfer = Transfer(value, account);
       Navigator.pop(context, newTransfer);
     }
+  }
+}
+
+class FormTransfer extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return FormTransferState();
   }
 }
 
