@@ -7,9 +7,14 @@ class TextInput extends StatelessWidget {
   final String label;
   final String placeholder;
   final IconData icon;
+  final TextInputType type;
 
   TextInput({
-    this.controller, this.label, this.placeholder, this.icon
+    this.controller,
+    this.label,
+    this.placeholder,
+    this.type,
+    this.icon
   });
 
   @override
@@ -26,7 +31,7 @@ class TextInput extends StatelessWidget {
           hintText: placeholder,
           icon: (icon != null) ? Icon(icon) : null,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: (type != null) ? type : TextInputType.text,
       ),
     );
   }

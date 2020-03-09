@@ -29,7 +29,8 @@ class FormTransferState extends State<FormTransfer> {
               controller: _controllerValue,
               label: _labelValue,
               placeholder: _placeholderValue,
-              icon: Icons.monetization_on
+              icon: Icons.monetization_on,
+              type: TextInputType.number
             ),
             RaisedButton(
               child: Text(_confirm),
