@@ -1,4 +1,5 @@
 import 'package:bytebank/components/text-input.dart';
+import 'package:bytebank/database/dao/contact-dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class FormContacts extends StatefulWidget {
 class _FormContatsState extends State<FormContacts> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _accountController = TextEditingController();
+  final ContactDao _contactDao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,7 @@ class _FormContatsState extends State<FormContacts> {
           ),
           TextInput(
             controller: _accountController,
-            label: 'Account Number',
-            type: TextInputType.number
+            label: 'Account Number'
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -38,9 +39,9 @@ class _FormContatsState extends State<FormContacts> {
               child: RaisedButton(
                 onPressed: () {
                   final String name = _nameController.text;
-                  final int account = int.tryParse(_accountController.text);
+                  final String account = _accountController.text;
                   final Contact newContact = Contact(0, name, account);
-                  Navigator.pop(context, newContact);
+                  _contactDao.save(newContact).then((id) => Navigator.pop(context));
                 },
                 child: Text('Create')
               )
