@@ -3,11 +3,11 @@ class Contact {
   final String name;
   final String account;
 
-  Contact(
+  Contact({
     this.id,
     this.name,
     this.account
-  );
+  });
 
   @override
   String toString() {

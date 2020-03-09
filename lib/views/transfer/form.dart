@@ -49,7 +49,7 @@ class FormTransferState extends State<FormTransfer> {
     final String account = _controllerAccount.text;
     final double value = double.tryParse(_controllerValue.text);
     if(account != null && value != null){
-      final newTransfer = Transfer(value, account);
+      final newTransfer = Transfer(value: value, account: account);
       Navigator.pop(context, newTransfer);
     }
   }

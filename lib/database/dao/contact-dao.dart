@@ -50,9 +50,9 @@ class ContactDao {
     final List<Contact> contacts = List();
     for (Map<String, dynamic> row in result) {
       final Contact contact = Contact(
-        row[_id],
-        row[_name],
-        row[_account],
+        id: row[_id],
+        name: row[_name],
+        account: row[_account],
       );
       contacts.add(contact);
     }

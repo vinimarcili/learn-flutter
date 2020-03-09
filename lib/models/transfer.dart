@@ -1,11 +1,18 @@
+import 'package:bytebank/models/contact.dart';
+
 class Transfer {
   final double value;
   final String account;
+  final Contact contact;
 
-  Transfer(this.value, this.account);
+  Transfer({
+    this.value,
+    this.contact,
+    this.account
+  });
 
   @override
   String toString() {
-    return 'Transferência{valor: $value}, {conta: $account}';
+    return 'Transferência{value: $value}, {contact: $contact}, {account: $account}';
   }
 }
