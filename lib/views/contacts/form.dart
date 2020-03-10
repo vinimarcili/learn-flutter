@@ -30,7 +30,8 @@ class _FormContatsState extends State<FormContacts> {
           ),
           TextInput(
             controller: _accountController,
-            label: 'Account Number'
+            label: 'Account Number',
+            type: TextInputType.number
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -39,7 +40,7 @@ class _FormContatsState extends State<FormContacts> {
               child: RaisedButton(
                 onPressed: () {
                   final String name = _nameController.text;
-                  final String account = _accountController.text;
+                  final int account = int.tryParse(_accountController.text);
                   final Contact newContact = Contact(name: name, account: account);
                   _contactDao.save(newContact).then((id) => Navigator.pop(context));
                 },

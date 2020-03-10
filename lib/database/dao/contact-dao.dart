@@ -4,7 +4,7 @@ import 'package:sqflite/sqlite_api.dart';
 
 class ContactDao {
 
-  static const String tableSql = 
+  static const String tableSql =
     'CREATE TABLE $_tableName('
       '$_id INTEGER PRIMARY KEY, '
       '$_name TEXT, '
@@ -23,7 +23,7 @@ class ContactDao {
   Future<List<Contact>> findAll() async {
     final Database db = await getDatabase();
     final List<Map<String, dynamic>> result = await db.query(_tableName);
-    return _toList(result); 
+    return _toList(result);
   }
 
   Future<int> update(Contact contact) async {

@@ -1,6 +1,5 @@
 import 'package:bytebank/views/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:bytebank/views/transfer/list.dart';
 
 void main() => runApp(
   BytebankApp()

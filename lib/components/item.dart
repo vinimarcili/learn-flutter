@@ -13,7 +13,7 @@ class Item extends StatelessWidget {
       child: ListTile(
         leading: Icon(Icons.monetization_on),
         title: Text(_transfer.value.toString()),
-        subtitle: Text(_transfer.account),
+        subtitle: Text(_transfer.account.toString()),
       )
     );
   }

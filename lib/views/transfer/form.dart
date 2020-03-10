@@ -13,7 +13,7 @@ const _confirm = 'Confirmar';
 class FormTransferState extends State<FormTransfer> {
   final TextEditingController _controllerAccount = TextEditingController();
   final TextEditingController _controllerValue = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +46,7 @@ class FormTransferState extends State<FormTransfer> {
   }
 
   void _buildTransfer(context) {
-    final String account = _controllerAccount.text;
+    final int account = int.tryParse(_controllerAccount.text);
     final double value = double.tryParse(_controllerValue.text);
     if(account != null && value != null){
       final newTransfer = Transfer(value: value, account: account);

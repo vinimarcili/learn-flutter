@@ -1,10 +1,11 @@
 import 'package:bytebank/components/centered-message.dart';
 import 'package:bytebank/components/loader.dart';
 import 'package:bytebank/models/transfer.dart';
-import 'package:bytebank/services/web-client.dart';
+import 'package:bytebank/services/api.dart';
 import 'package:flutter/material.dart';
 
 class TransactionsList extends StatelessWidget {
+  final Api _api = Api();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +13,7 @@ class TransactionsList extends StatelessWidget {
         title: Text('Transactions'),
       ),
       body: FutureBuilder<List<Transfer>>(
-        future: findAll(),
+        future: _api.findAll(),
         builder: (context, snapshot) {
           switch(snapshot.connectionState) {
             case ConnectionState.none:
