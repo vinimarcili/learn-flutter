@@ -1,4 +1,5 @@
 import 'package:bytebank/components/card.dart';
+import 'package:bytebank/components/loader.dart';
 import 'package:bytebank/database/dao/contact-dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/views/contacts/form.dart';
@@ -28,16 +29,7 @@ class _ContactsListState extends State<ContactsList> {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    Text('Loading'),
-                  ],
-                ),
-              );
+              return Loader();
               break;
             case ConnectionState.active:
               break;
