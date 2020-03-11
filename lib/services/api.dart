@@ -51,13 +51,13 @@ class Api {
     return transactions;
   }
 
-  Future<Transfer> save(Transfer transaction) async {
+  Future<Transfer> save(Transfer transaction, String password) async {
     final Map<String, dynamic> transactionMap = _mapTransaction(transaction);
     final Response response = await client.post(
       _url + '/transactions',
       headers: {
         'Content-type': 'application/json',
-        'password': '2000'
+        'password': password
       },
       body: jsonEncode(transactionMap)
     ).timeout(
