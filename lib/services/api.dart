@@ -64,6 +64,14 @@ class Api {
       Duration(seconds: 5)
     );
 
-    return _mapResponse(response.body);
+    if(response.statusCode == 200) {
+      return _mapResponse(response.body);
+    } else if(response.statusCode == 400) {
+      throw Exception('Empty fields');
+    } else if(response.statusCode == 401) {
+      throw Exception('Authentication failed');
+    } else {
+      throw Exception('Unknown Error');
+    }
   }
 }
