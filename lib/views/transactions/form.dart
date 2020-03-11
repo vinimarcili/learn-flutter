@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bytebank/components/dialog-response.dart';
 import 'package:bytebank/components/dialog-transaction-auth.dart';
 import 'package:bytebank/components/text-input.dart';
@@ -94,7 +96,19 @@ class _TransactionFormState extends State<TransactionForm> {
       .catchError((err) {
         showDialog(
           context: context,
+          builder: (contextDialogInside) => FailureDialog('Imeout submitting')
+        );
+      }, test: (err) => err is TimeoutException)
+      .catchError((err) {
+        showDialog(
+          context: context,
           builder: (contextDialogInside) => FailureDialog(err.message)
+        );
+      }, test: (err) => err is HttpException)
+      .catchError((err) {
+        showDialog(
+          context: context,
+          builder: (contextDialogInside) => FailureDialog('Unknown Error')
         );
       }, test: (err) => err is Exception);
 

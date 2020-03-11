@@ -4,4 +4,5 @@ import 'package:http_interceptor/http_client_with_interceptor.dart';
 
 final Client client = HttpClientWithInterceptor.build(
   interceptors: [LoggingInterceptor()],
+  requestTimeout: Duration(seconds: 5),
 );

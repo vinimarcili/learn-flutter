@@ -44,9 +44,7 @@ class Api {
   }
 
   Future<List<Transfer>> findAll() async {
-    final Response response = await client.get(_url + '/transactions').timeout(
-      Duration(seconds: 5)
-    );
+    final Response response = await client.get(_url + '/transactions');
    final List<Transfer> transactions = _mapTransfers(response.body);
     return transactions;
   }
@@ -60,18 +58,22 @@ class Api {
         'password': password
       },
       body: jsonEncode(transactionMap)
-    ).timeout(
-      Duration(seconds: 5)
     );
 
     if(response.statusCode == 200) {
       return _mapResponse(response.body);
     } else if(response.statusCode == 400) {
-      throw Exception('Empty fields');
+      throw HttpException('Empty fields');
     } else if(response.statusCode == 401) {
-      throw Exception('Authentication failed');
+      throw HttpException('Authentication failed');
     } else {
-      throw Exception('Unknown Error');
+      throw HttpException('Unknown Error');
     }
   }
+}
+
+class HttpException implements Exception {
+  final String message;
+
+  HttpException(this.message);
 }
