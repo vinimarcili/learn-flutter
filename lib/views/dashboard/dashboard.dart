@@ -9,39 +9,47 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard')
-      ),body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-            'images/bytebank_logo.png'
+      ),body: LayoutBuilder(
+        builder: (context, constrains) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constrains.maxHeight
             ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                MenuItem(
-                  icon: Icons.monetization_on,
-                  label: 'Transfer',
-                  onClick: () {
-                    _onTap(context, ContactsList());
-                  }
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                  'images/bytebank_logo.png'
+                  ),
                 ),
-                MenuItem(
-                  icon: Icons.description,
-                  label: 'Transaction Feed',
-                  onClick: () {
-                    _onTap(context, TransactionsList());
-                  }
-                )
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      MenuItem(
+                        icon: Icons.monetization_on,
+                        label: 'Transfer',
+                        onClick: () {
+                          _onTap(context, ContactsList());
+                        }
+                      ),
+                      MenuItem(
+                        icon: Icons.description,
+                        label: 'Transaction Feed',
+                        onClick: () {
+                          _onTap(context, TransactionsList());
+                        }
+                      )
+                    ],
+                  )
+                ) 
               ],
-            )
-          ) 
-        ],
-      ), 
+            ), 
+          ),
+        )),
     );
   }
 
