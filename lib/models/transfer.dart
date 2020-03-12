@@ -9,7 +9,9 @@ class Transfer {
     this.value,
     this.contact,
     this.account
-  });
+  }) : assert(
+    value > 0
+  );
 
   Transfer.fromJson(Map<String, dynamic> json) :
     value = json['value'],
